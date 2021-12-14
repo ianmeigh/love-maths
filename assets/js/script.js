@@ -6,13 +6,27 @@ document.addEventListener('DOMContentLoaded', function () {
   for (let button of buttons) {
     button.addEventListener('click', function () {
       if (this.getAttribute("data-type") === "submit") {
-        checkAnswer();
+        if (isNaN(parseInt(document.getElementById('answer-box').value))) {
+          alert("Please enter a valid numeric answer");
+        } else {
+          checkAnswer();
+        }
       } else {
         let gameType = this.getAttribute("data-type");
         runGame(gameType);
       }
     });
   }
+
+  document.getElementById('answer-box').addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      if (isNaN(parseInt(document.getElementById('answer-box').value))) {
+        alert("Please enter a valid numeric answer");
+      } else {
+        checkAnswer();
+      }
+    }
+  });
 
   runGame("addition");
 });
@@ -113,10 +127,10 @@ function displayAdditionQuestion(operand1, operand2) {
 
 function displaySubtractQuestion(operand1, operand2) {
   // Ensure we never have a negative answer
-  document.getElementById('operand1').textContent = 
-  operand1 >= operand2 ? operand1 : operand2;
-  document.getElementById('operand2').textContent = 
-  operand1 >= operand2 ? operand2 : operand1;
+  document.getElementById('operand1').textContent =
+    operand1 >= operand2 ? operand1 : operand2;
+  document.getElementById('operand2').textContent =
+    operand1 >= operand2 ? operand2 : operand1;
   document.getElementById('operator').textContent = "-";
 }
 
