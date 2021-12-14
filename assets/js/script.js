@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  document.getElementById('answer-box').addEventListener("keydown", function(event) {
+  document.getElementById('answer-box').addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       if (isNaN(parseInt(document.getElementById('answer-box').value))) {
         alert("Please enter a valid numeric answer");
@@ -126,7 +126,7 @@ function displayAdditionQuestion(operand1, operand2) {
 }
 
 function displaySubtractQuestion(operand1, operand2) {
-  // Ensure we never have a negative answer
+  // Ensure the first number is always bigger than the second
   document.getElementById('operand1').textContent =
     operand1 >= operand2 ? operand1 : operand2;
   document.getElementById('operand2').textContent =
@@ -141,7 +141,12 @@ function displayMultiplyQuestion(operand1, operand2) {
 }
 
 function displayDivisionQuestion(operand1, operand2) {
-  document.getElementById('operand1').textContent = operand1;
-  document.getElementById('operand2').textContent = operand2;
-  document.getElementById('operator').textContent = "/";
+  // Check answer is always a whole number
+  if (operand1 % operand2 === 0 && operand2 !== 1 && operand1 !== operand2) {
+    document.getElementById('operand1').textContent = operand1; 
+    document.getElementById('operand2').textContent = operand2;
+    document.getElementById('operator').textContent = "/";
+  } else {
+    runGame("division");
+  }
 }
